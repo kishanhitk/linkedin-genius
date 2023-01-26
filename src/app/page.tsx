@@ -3,7 +3,7 @@ import Generator from "@/components/Generator";
 export default function Home() {
   return (
     <main>
-      <header className="fixed top-0 left-0 right-0 flex items-center justify-between border-b  bg-gray-50/50 px-10  py-2 text-center text-lg font-medium backdrop-blur-sm">
+      <header className="fixed top-0 left-0 right-0 z-10 flex items-center justify-between border-b  bg-gray-50/50 px-10  py-2 text-center text-lg font-medium backdrop-blur-sm">
         <Image
           alt="LinkedIn Genius Logo"
           src="/lg-logo.png"
