@@ -11,7 +11,7 @@ export default function Home() {
           height={40}
         />
         <a
-          href="https://github.com/kishanhitk/linked-genius"
+          href="https://github.com/kishanhitk/linkedin-genius"
           target="_blank"
           rel="noopener noreferrer"
         >
