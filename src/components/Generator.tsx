@@ -19,6 +19,7 @@ export const Generator = () => {
   ];
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
     const data = {
       contentInput,
       tone,
@@ -34,14 +35,15 @@ export const Generator = () => {
       // Get the response from the server
       const result = await response.json();
       setResultText(result.text);
+      resultTextRef.current?.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
       console.log(error);
       setError(
         "It seems the OpenAI server is overloaded. Please try again later."
       );
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-    resultTextRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   return (
     <div className="mx-auto mt-20 max-w-3xl px-12">
