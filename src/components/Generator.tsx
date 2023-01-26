@@ -4,7 +4,7 @@ import { FormEvent, useRef, useState } from "react";
 export const Generator = () => {
   const [contentInput, setContentInput] = useState("");
   const [tone, setTone] = useState("Motivational");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [resultText, setResultText] = useState("");
   const resultTextRef = useRef<HTMLDivElement>(null);
   const tones = [
