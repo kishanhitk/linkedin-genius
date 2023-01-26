@@ -12,7 +12,7 @@ export default async function handler(
   const { tone, contentInput } = JSON.parse(req.body);
   const body = {
     model: "text-davinci-003",
-    prompt: `Write a long LinkedIn post. Keep the tone of the post to be ${tone}. Use proper hashtags. Add a line to request users to follow for more such posts. Context: ${contentInput}`,
+    prompt: `Write a long LinkedIn post. Keep the tone of the post to be ${tone}. Use proper hashtags. Add a line to request users to follow for more such posts. Context: ${contentInput}.`,
     temperature: 0.7,
     max_tokens: 600,
   };
