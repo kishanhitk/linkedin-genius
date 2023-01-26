@@ -7,7 +7,6 @@ export const Generator = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [resultText, setResultText] = useState("");
   const resultTextRef = useRef<HTMLDivElement>(null);
-
   const tones = [
     "Funny",
     "Serious",
@@ -62,8 +61,8 @@ export const Generator = () => {
             className="text-md rounded-md border border-gray-300 bg-gray-50 px-4 py-2 "
             name="contentInput"
             value={contentInput}
-            required
             rows={5}
+            required
             onChange={(e) => setContentInput(e.target.value)}
           />
 
@@ -72,7 +71,7 @@ export const Generator = () => {
               htmlFor="tone"
               className=" text-md font-medium text-gray-900"
             >
-              How do you want to sound it like?
+              How would you like to sound it like?
             </label>
             <select
               onChange={(e) => setTone(e.target.value)}
@@ -127,7 +126,12 @@ export const Generator = () => {
             className="relative mt-5 mb-20 select-all rounded-lg border bg-gray-50 p-5  text-black"
           >
             {resultText}
-            <button onClick={() => navigator?.clipboard?.writeText(resultText)}>
+            {/* TODO: Not working. Reason: Permisson may not be present always. */}
+            <button
+              onClick={async () => {
+                await navigator?.clipboard?.writeText(resultText);
+              }}
+            >
               <svg
                 className="absolute top-2 right-2"
                 xmlns="http://www.w3.org/2000/svg"
