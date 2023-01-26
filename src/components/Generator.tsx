@@ -6,6 +6,7 @@ export const Generator = () => {
   const [tone, setTone] = useState("Motivational");
   const [isLoading, setIsLoading] = useState(false);
   const [resultText, setResultText] = useState("");
+  const [error, setError] = useState("");
   const resultTextRef = useRef<HTMLDivElement>(null);
   const tones = [
     "Funny",
@@ -23,15 +24,22 @@ export const Generator = () => {
       tone,
     };
     setIsLoading(true);
-    // Send the data to the server
-    const response = await fetch("/api/generate", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    try {
+      // Send the data to the server
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
 
-    // Get the response from the server
-    const result = await response.json();
-    setResultText(result.text);
+      // Get the response from the server
+      const result = await response.json();
+      setResultText(result.text);
+    } catch (error) {
+      console.log(error);
+      setError(
+        "It seems the OpenAI server is overloaded. Please try again later."
+      );
+    }
     setIsLoading(false);
     resultTextRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -120,6 +128,7 @@ export const Generator = () => {
           </button>
         </form>
 
+        {error && <div className="mt-5 text-center text-red-500">{error}</div>}
         {resultText && (
           <div
             ref={resultTextRef}
