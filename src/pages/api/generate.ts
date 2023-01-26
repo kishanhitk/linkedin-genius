@@ -33,6 +33,6 @@ export default async function handler(
   //   const data = await response.json();
   //   const text = data.choices[0].text;
   const text = fakeData;
-
+  console.log(text);
   res.status(200).json({ text });
 }
