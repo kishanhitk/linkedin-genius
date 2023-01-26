@@ -4,7 +4,7 @@ import { FormEvent, useRef, useState } from "react";
 export const Generator = () => {
   const [contentInput, setContentInput] = useState("");
   const [tone, setTone] = useState("Motivational");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [resultText, setResultText] = useState("");
   const resultTextRef = useRef<HTMLDivElement>(null);
   const tones = [
@@ -31,7 +31,6 @@ export const Generator = () => {
 
     // Get the response from the server
     const result = await response.json();
-    console.log(result);
     setResultText(result.text);
     setIsLoading(false);
     resultTextRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -88,6 +87,7 @@ export const Generator = () => {
           </div>
 
           <button
+            disabled={isLoading}
             className={`flex h-12 items-center justify-center  rounded-md px-4 text-xl font-semibold text-white ${
               isLoading ? "bg-black/80" : "bg-black"
             }`}
