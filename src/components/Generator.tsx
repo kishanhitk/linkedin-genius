@@ -37,7 +37,7 @@ export const Generator = () => {
     resultTextRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className="mt-20 max-w-3xl px-12">
+    <div className="mx-auto mt-20 max-w-3xl px-12">
       <div className="flex h-full flex-col justify-center">
         <h2 className="text-center text-2xl">LinkedIn Genius</h2>
         <h3 className="my-10 text-center text-lg font-light">
