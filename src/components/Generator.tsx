@@ -65,13 +65,10 @@ export const Generator = () => {
     <div className="mx-auto mt-20 max-w-3xl px-12 pb-20">
       <div className="flex h-full flex-col justify-center">
         <Hero />
-        <form
-          className="flex flex-col justify-center gap-y-4 "
-          onSubmit={handleSubmit}
-        >
+        <form className="flex flex-col justify-center " onSubmit={handleSubmit}>
           <label
             htmlFor="contentInput"
-            className=" text-md font-medium text-gray-900"
+            className=" text-md text-gray-902 mb-2 font-medium"
           >
             What did you achieve today?
           </label>
@@ -85,30 +82,28 @@ export const Generator = () => {
             onChange={(e) => setContentInput(e.target.value)}
           />
 
-          <div>
-            <label
-              htmlFor="tone"
-              className=" text-md font-medium text-gray-900"
-            >
-              How would you like to sound it like?
-            </label>
-            <select
-              onChange={(e) => setTone(e.target.value)}
-              value={tone}
-              id="tone"
-              className="text-md block w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 "
-            >
-              {tones.map((tone) => (
-                <option key={tone} value={tone}>
-                  {tone}
-                </option>
-              ))}
-            </select>
-          </div>
+          <label
+            htmlFor="tone"
+            className="text-md my-3 mb-2  font-medium text-gray-900"
+          >
+            How would you like to sound it like?
+          </label>
+          <select
+            onChange={(e) => setTone(e.target.value)}
+            value={tone}
+            id="tone"
+            className="text-md  block w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 "
+          >
+            {tones.map((tone) => (
+              <option key={tone} value={tone}>
+                {tone}
+              </option>
+            ))}
+          </select>
 
           <button
             disabled={isLoading}
-            className={`flex h-12 items-center justify-center  rounded-md px-4 text-xl font-semibold text-white ${
+            className={`mt-6 flex h-12 items-center justify-center  rounded-md px-4 text-xl font-semibold text-white ${
               isLoading ? "bg-black/80" : "bg-black"
             }`}
             type="submit"
