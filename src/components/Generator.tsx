@@ -56,7 +56,7 @@ export const Generator = () => {
           </span>
         </h3>
         <form
-          className=" flex flex-col justify-center gap-y-4"
+          className="flex flex-col justify-center gap-y-4 pb-20"
           onSubmit={handleSubmit}
         >
           <label
@@ -70,7 +70,7 @@ export const Generator = () => {
             className="text-md rounded-md border border-gray-300 bg-gray-50 px-4 py-2 "
             name="contentInput"
             value={contentInput}
-            rows={5}
+            rows={4}
             required
             onChange={(e) => setContentInput(e.target.value)}
           />
