@@ -28,7 +28,7 @@ export default function Home() {
       <Generator />
       <footer className="fixed bottom-0 left-0 right-0 flex justify-center  border-t bg-gray-50 py-2">
         Built with 🍕 by{" "}
-        <span className="px-1 text-blue-900 underline underline-offset-2">
+        <span className="px-1 text-blue-900 underline decoration-slate-500 decoration-dotted underline-offset-2">
           <a
             target="_blank"
             rel="noopener noreferrer"
