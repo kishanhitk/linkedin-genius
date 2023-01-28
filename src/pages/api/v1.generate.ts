@@ -25,9 +25,7 @@ export default async function handler(
     },
     body: JSON.stringify(body),
   });
-  console.log(response);
   const data = await response.json();
-  console.log(data);
   const text = data.choices[0].text;
   res.status(200).json({ text });
 }
