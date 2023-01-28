@@ -3,7 +3,7 @@ import { FormEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Hero } from "./Hero";
 export const Generator = () => {
-  const [contentInput, setContentInput] = useState("aa");
+  const [contentInput, setContentInput] = useState("");
   const [tone, setTone] = useState("Motivational");
   const [isLoading, setIsLoading] = useState(false);
   const [resultText, setResultText] = useState("");
