@@ -37,6 +37,7 @@ export const Generator = () => {
       if (!data) {
         return;
       }
+      setResultText("");
 
       const reader = data.getReader();
       const decoder = new TextDecoder();
