@@ -1,22 +1,14 @@
 import { OpenAIStream, OpenAIStreamPayload } from "@/utils/OpenAPIStream";
-import type { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest } from "next/server";
 
-type Data = {
-  text?: string;
-};
-export const config = {
-  runtime: "edge",
-};
-
-export default async function handler(
-  req: NextRequest,
-  res: NextApiResponse<Data>
-) {
+export default async function handler(req: NextRequest) {
   const { tone, contentInput } = (await req.json()) as {
     tone: string;
     contentInput: string;
   };
+
+  if (!tone || !contentInput)
+    return new Response("Invalid input", { status: 400 });
 
   const prompt = `Write a long LinkedIn post. Keep the tone of the post to be ${tone}. Use proper hashtags. Add a line to request users to follow for more such posts. Context: ${contentInput}.`;
   const payload: OpenAIStreamPayload = {
