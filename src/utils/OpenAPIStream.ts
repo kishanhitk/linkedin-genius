@@ -73,4 +73,4 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
   return stream;
 }
 
-// Ref: https://github.com/Nutlope/twitterbio
+// Credit: https://github.com/Nutlope/twitterbio

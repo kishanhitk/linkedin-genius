@@ -1,13 +1,14 @@
 "use client";
-
 import { FormEvent, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { Hero } from "./Hero";
 export const Generator = () => {
-  const [contentInput, setContentInput] = useState("");
+  const [contentInput, setContentInput] = useState("aa");
   const [tone, setTone] = useState("Motivational");
   const [isLoading, setIsLoading] = useState(false);
   const [resultText, setResultText] = useState("");
   const [error, setError] = useState("");
-  const resultTextRef = useRef<HTMLDivElement>(null);
+  const afterResultTextRef = useRef<HTMLDivElement>(null);
   const tones = [
     "Funny",
     "Serious",
@@ -16,26 +17,41 @@ export const Generator = () => {
     "Inspiring",
     "Big Achievement",
     "Motivational",
+    "Emotional",
   ];
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
-    const data = {
+    const input = {
       contentInput,
       tone,
     };
     setIsLoading(true);
     try {
       // Send the data to the server
-      const response = await fetch("/api/generate", {
+      const response = await fetch("/api/v2.generate", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify(input),
       });
 
-      // Get the response from the server
-      const result = await response.json();
-      setResultText(result.text);
-      resultTextRef.current?.scrollIntoView({ behavior: "smooth" });
+      // This data is a ReadableStream
+      const data = response.body;
+      if (!data) {
+        return;
+      }
+      setResultText("");
+
+      const reader = data.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        const chunkValue = decoder.decode(value);
+        setResultText((prev) => prev + chunkValue);
+        afterResultTextRef.current?.scrollIntoView({ behavior: "smooth" });
+      }
     } catch (error) {
       console.log(error);
       setError(
@@ -46,17 +62,11 @@ export const Generator = () => {
     }
   };
   return (
-    <div className="mx-auto mt-20 max-w-3xl px-12">
+    <div className="mx-auto mt-20 max-w-3xl px-12 pb-20">
       <div className="flex h-full flex-col justify-center">
-        <h2 className="text-center text-2xl">LinkedIn Genius</h2>
-        <h3 className="my-10 text-center text-lg font-light">
-          Unlock the power of AI to showcase your achievements on LinkedIn with
-          <span className="px-1 font-normal  underline decoration-blue-300 decoration-wavy underline-offset-2">
-            LinkedIn Genius
-          </span>
-        </h3>
+        <Hero />
         <form
-          className="flex flex-col justify-center gap-y-4 pb-20"
+          className="flex flex-col justify-center gap-y-4 "
           onSubmit={handleSubmit}
         >
           <label
@@ -132,15 +142,17 @@ export const Generator = () => {
 
         {error && <div className="mt-5 text-center text-red-500">{error}</div>}
         {resultText && (
-          <div
-            ref={resultTextRef}
-            className="relative mt-5 mb-20 select-all rounded-lg border bg-gray-50 p-5  text-black"
-          >
+          <div className="relative mt-5 mb-20 select-all rounded-lg border bg-gray-50 p-5  text-black">
             {resultText}
             {/* TODO: Not working. Reason: Permisson may not be present always. */}
             <button
               onClick={async () => {
-                await navigator?.clipboard?.writeText(resultText);
+                try {
+                  await navigator?.clipboard?.writeText(resultText);
+                  toast.success("Copied to clipboard!");
+                } catch (error) {
+                  toast.error("Failed to copy to clipboard!");
+                }
               }}
             >
               <svg
@@ -155,6 +167,7 @@ export const Generator = () => {
             </button>
           </div>
         )}
+        <div ref={afterResultTextRef}></div>
       </div>
     </div>
   );

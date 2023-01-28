@@ -1,8 +1,10 @@
 import Image from "next/image";
-import Generator from "@/components/Generatorv2";
+import Generator from "@/components/Generator";
+import { ToasterClient } from "@/components/ToasterClient";
 export default function Home() {
   return (
     <main>
+      <ToasterClient />
       <header className="fixed top-0 left-0 right-0 z-10 flex items-center justify-between border-b  bg-gray-50/50 px-10  py-2 text-center text-lg font-medium backdrop-blur-sm">
         <Image
           alt="LinkedIn Genius Logo"
@@ -28,7 +30,7 @@ export default function Home() {
       <Generator />
       <footer className="fixed bottom-0 left-0 right-0 flex justify-center  border-t bg-gray-50 py-2">
         Built with 🍕 by{" "}
-        <span className="px-1 text-blue-900 underline decoration-slate-500 decoration-dotted underline-offset-2">
+        <span className="px-1 underline decoration-blue-400 decoration-dashed underline-offset-2">
           <a
             target="_blank"
             rel="noopener noreferrer"
