@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Generator from "@/components/Generator";
+import Generator from "@/components/Generatorv2";
 export default function Home() {
   return (
     <main>
