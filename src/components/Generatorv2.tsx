@@ -2,12 +2,12 @@
 
 import { FormEvent, useRef, useState } from "react";
 export const Generator = () => {
-  const [contentInput, setContentInput] = useState("I got a job at Google.");
+  const [contentInput, setContentInput] = useState("");
   const [tone, setTone] = useState("Motivational");
   const [isLoading, setIsLoading] = useState(false);
   const [resultText, setResultText] = useState("");
   const [error, setError] = useState("");
-  const resultTextRef = useRef<HTMLDivElement>(null);
+  const afterResultTextRef = useRef<HTMLDivElement>(null);
   const tones = [
     "Funny",
     "Serious",
@@ -47,8 +47,8 @@ export const Generator = () => {
         done = doneReading;
         const chunkValue = decoder.decode(value);
         setResultText((prev) => prev + chunkValue);
+        afterResultTextRef.current?.scrollIntoView({ behavior: "smooth" });
       }
-      resultTextRef.current?.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
       console.log(error);
       setError(
@@ -59,7 +59,7 @@ export const Generator = () => {
     }
   };
   return (
-    <div className="mx-auto mt-20 max-w-3xl px-12">
+    <div className="mx-auto mt-20 max-w-3xl px-12 pb-20">
       <div className="flex h-full flex-col justify-center">
         <h2 className="text-center text-2xl">LinkedIn Genius</h2>
         <h3 className="my-10 text-center text-lg font-light">
@@ -69,7 +69,7 @@ export const Generator = () => {
           </span>
         </h3>
         <form
-          className="flex flex-col justify-center gap-y-4 pb-20"
+          className="flex flex-col justify-center gap-y-4 "
           onSubmit={handleSubmit}
         >
           <label
@@ -145,10 +145,7 @@ export const Generator = () => {
 
         {error && <div className="mt-5 text-center text-red-500">{error}</div>}
         {resultText && (
-          <div
-            ref={resultTextRef}
-            className="relative mt-5 mb-20 select-all rounded-lg border bg-gray-50 p-5  text-black"
-          >
+          <div className="relative mt-5 mb-20 select-all rounded-lg border bg-gray-50 p-5  text-black">
             {resultText}
             {/* TODO: Not working. Reason: Permisson may not be present always. */}
             <button
@@ -168,6 +165,7 @@ export const Generator = () => {
             </button>
           </div>
         )}
+        <div ref={afterResultTextRef}></div>
       </div>
     </div>
   );
